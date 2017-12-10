@@ -1,22 +1,12 @@
-const gulp = require('gulp'),
-      browserSync = require('browser-sync').create(),
-      del = require('del');
+var gulp = require('gulp');
+var swig = require('gulp-swig');
+var frontMatter = require('gulp-front-matter');
 
-// Static server
-gulp.task('browser-sync', function() {
-    browserSync.init({
-        server: {
-            baseDir: 'dist'
-        }
-    });
+gulp.task('compile-page', function() {
+  gulp.src('page.html')
+      .pipe(frontMatter({ property: 'data' }))
+      .pipe(swig())
+      .pipe(gulp.dest('build'));
 });
 
-//gulp.watch("dist/**/*.css", ['sass']);
-//gulp.watch("dist/*.html").on('change', browserSync.reload);
-
-//gulp.watch("dist/css/*.min.css").on('change', browserSync.reload);
-
-gulp.task('clean', function() {
-  // You can use multiple globbing patterns as you would with `gulp.src`
-  return del(['dist']);
-});
+gulp.task('default', ['compile-page']);
