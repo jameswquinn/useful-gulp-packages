@@ -1,6 +1,7 @@
 "use strict";
 
 var gulp = require("gulp"),
+    autoprefixer = require('gulp-autoprefixer'),
     uncss = require("gulp-uncss"),
     sass = require("gulp-sass"),
     sourcemaps = require('gulp-sourcemaps'),
@@ -12,6 +13,7 @@ var gulp = require("gulp"),
 gulp.task("build:sass", function () {
     return gulp.src("src/sass/**/*.scss")
         .pipe(sass())
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
         .pipe(uncss({
             html: glob.sync("dist/**/*.html")
         }))
